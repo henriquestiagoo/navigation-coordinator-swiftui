@@ -10,9 +10,7 @@ import Foundation
 final class FavouritesManager: ObservableObject {
     @Published private(set) var issues: [Issue] = []
 
-    public init(
-        issues: [Issue] = []
-    ) {
+    public init(issues: [Issue] = []) {
         self.issues = issues
     }
 

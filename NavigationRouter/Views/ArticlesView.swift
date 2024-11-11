@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ArticlesView: View {
-    @EnvironmentObject private var routerManager: NavigationRouter
+    @Environment(Coordinator<AppRoutes>.self) private var appCoordinator
     let articles: [Article]
 
     var body: some View {
@@ -19,7 +19,7 @@ struct ArticlesView: View {
 
             Section {
                 Button {
-                    routerManager.reset()
+                    appCoordinator.reset()
                 } label: {
                     Text("Go back to Issues")
                 }
@@ -30,10 +30,6 @@ struct ArticlesView: View {
 }
 
 #Preview {
-    NavigationStack {
-        ArticlesView(
-            articles: Article.articlesFromIssue20
-        )
-        .environmentObject(NavigationRouter())
-    }
+    CoordinatorStack(root: AppRoutes.articles(articles: Article.articlesFromIssue20))
+        .environment(Coordinator<AppRoutes>())
 }

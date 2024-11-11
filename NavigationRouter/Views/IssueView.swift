@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct IssueView: View {
-    @EnvironmentObject private var routerManager: NavigationRouter
+    @Environment(Coordinator<AppRoutes>.self) private var appCoordinator
     @EnvironmentObject private var favouritesManager: FavouritesManager
 
     let issue: Issue
@@ -27,16 +27,14 @@ struct IssueView: View {
             if !issue.articles.isEmpty {
                 Section("Articles") {
                     NavigationLink(
-                        value: Route.articles(articles: issue.articles)
+                        value: AppRoutes.articles(articles: issue.articles)
                     ) {
                         Text("\(issue.articles.count) Articles")
                     }
                 }
             }
 
-            Link(
-                destination: URL(string: issue.url)!
-            ) {
+            Link(destination: URL(string: issue.url)!) {
                 Text("Check issue")
             }
 
@@ -66,9 +64,7 @@ struct IssueView: View {
 }
 
 #Preview {
-    NavigationStack {
-        IssueView(issue: Issue.mocks.last!)
-            .environmentObject(NavigationRouter())
-            .environmentObject(FavouritesManager())
-    }
+    CoordinatorStack(root: AppRoutes.issue(issue: Issue.mocks.last!))
+        .environment(Coordinator<AppRoutes>())
+        .environmentObject(FavouritesManager())
 }
