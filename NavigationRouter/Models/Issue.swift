@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Issue: Identifiable {
+struct Issue: Hashable, Identifiable {
     var id: Int { number }
     let title: String
     let description: String

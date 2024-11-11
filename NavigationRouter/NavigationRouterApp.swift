@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct NavigationRouterApp: App {
+    @State private var favouritesManager = FavouritesManager()
+
     var body: some Scene {
         WindowGroup {
-            AppView()
+            CoordinatorStack(root: AppRoutes.root)
+                .environmentObject(favouritesManager)
         }
     }
 }
